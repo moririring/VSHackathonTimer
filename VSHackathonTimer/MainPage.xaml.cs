@@ -34,5 +34,10 @@ namespace VSHackathonTimer
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
+
+        private void CountDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(CountDownPage));
+        }
     }
 }
