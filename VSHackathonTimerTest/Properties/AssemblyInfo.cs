@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// アセンブリに関する一般情報は以下の属性セットをとおして制御されます。 
-// アセンブリに関連付けられている情報を変更するには、
-// これらの属性値を変更してください。
+// アセンブリに関する情報は、次の属性のセットを通して制御されます。
+//制御されます。アセンブリに関連付けられている情報を変更するには、
+//これらの属性値を変更します。
 [assembly: AssemblyTitle("VSHackathonTimerTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -14,23 +14,15 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// ComVisible を false に設定すると、その型はこのアセンブリ内で COM コンポーネントから 
-// 参照できなくなります。このアセンブリ内で COM から型にアクセスする必要がある場合は、 
-// その型の ComVisible 属性を true に設定してください。
-[assembly: ComVisible(false)]
-
-// このプロジェクトが COM に公開される場合、次の GUID がタイプ ライブラリの ID になります。
-[assembly: Guid("1c99e099-d51c-4902-8eb3-c949fb3c49da")]
-
-// アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
+//アセンブリのバージョン情報は、以下の 4 つの値で構成されます。
 //
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
+//メジャー バージョン
+//マイナー バージョン 
+//ビルド番号
+//リビジョン
 //
-// すべての値を指定するか、以下のように '*' を使用してビルド番号とリビジョン番号を 
-// 既定値にすることができます:
-// [assembly: AssemblyVersion("1.0.*")]
+// すべての値を指定するか、以下のように '*' を使用してビルドおよびリビジョン番号を
+//既定値にすることができます:
+//[アセンブリ: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
