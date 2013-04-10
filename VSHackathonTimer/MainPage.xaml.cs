@@ -37,7 +37,7 @@ namespace VSHackathonTimer
 
         private void CountDownButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(CountDownPage));
+            this.Frame.Navigate(typeof(CountDownSetPage));
         }
     }
 }

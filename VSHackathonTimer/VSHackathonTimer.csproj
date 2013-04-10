@@ -113,6 +113,9 @@
     <Compile Include="CountDownPage.xaml.cs">
       <DependentUpon>CountDownPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CountDownSetPage.xaml.cs">
+      <DependentUpon>CountDownSetPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CountDownPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CountDownSetPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

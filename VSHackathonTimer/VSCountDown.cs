@@ -32,7 +32,7 @@ namespace VSHackathonTimer
         public string StringTime { private set; get; }
         public DateTime DateTimeTime { private set; get; }
 
-        private void CalcTime()
+        private void CalcIntTime()
         {
             IntTime = 0;
             int dig = 1;
@@ -41,23 +41,43 @@ namespace VSHackathonTimer
                 IntTime += t * dig;
                 dig *= 10;
             }
-            int dotCount = 0;
-            もう少しリファクタリング
+        }
+        private void CalcStringTime()
+        {
             var st = new StringBuilder();
-            foreach (var t in timer.Reverse())
+            foreach (var t in timer.Reverse().Select((v, i) => new { v, i }))
             {
-                if (dotCount % 2 == 0 && dotCount != 0)
+                //最初以外2回毎に:をつける
+                if (t.i % 2 == 0 && t.i != 0)
                 {
                     st.Append(":");
                 }
-                st.Append(t);
-                dotCount++;
+                st.Append(t.v);
             }
             StringTime = st.ToString();
+        }
+
+        private void CalcTime()
+        {
+            CalcIntTime();
+            CalcStringTime();
+            //DateTime
             DateTimeTime = new DateTime(0);
             DateTimeTime = DateTimeTime.AddSeconds(timer[(int)Digit.Digit_s10] * 10 + timer[(int)Digit.Digit_s01] * 1);
             DateTimeTime = DateTimeTime.AddMinutes(timer[(int)Digit.Digit_m10] * 10 + timer[(int)Digit.Digit_m01] * 1);
             DateTimeTime = DateTimeTime.AddHours(timer[(int)Digit.Digit_h10] * 10 + timer[(int)Digit.Digit_h01] * 1);
+
+        }
+        private void CalcTimerFromDateTime()
+        {
+            timer[(int)Digit.Digit_s01] = DateTimeTime.Second % 10;
+            timer[(int)Digit.Digit_s10] = DateTimeTime.Second / 10;
+            timer[(int)Digit.Digit_m01] = DateTimeTime.Minute % 10;
+            timer[(int)Digit.Digit_m10] = DateTimeTime.Minute / 10;
+            timer[(int)Digit.Digit_h01] = DateTimeTime.Hour % 10;
+            timer[(int)Digit.Digit_h10] = DateTimeTime.Hour / 10;
+            CalcIntTime();
+            CalcStringTime();
         }
         public void SetTimer(PlusMinus ud, Digit p)
         {
@@ -71,6 +91,21 @@ namespace VSHackathonTimer
             }
             CalcTime();
         }
-
+        public void Clear()
+        {
+            for (int i = 0; i < timer.Length; i++)
+            {
+                timer[i] = 0;
+            }
+            CalcTime();
+        }
+        public void CountDown()
+        {
+            if (DateTimeTime.ToString("HH:mm:ss") != "00:00:00")
+            {
+                DateTimeTime = DateTimeTime.AddSeconds(-1);
+                CalcTimerFromDateTime();
+            }
+        }
     }
 }
