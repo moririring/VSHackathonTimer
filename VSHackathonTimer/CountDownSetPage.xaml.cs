@@ -96,9 +96,16 @@ namespace VSHackathonTimer
         }
         private void SetButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(CountDownPage), gVSCountDown.DateTimeTime);
-
-            //TimerTextBox.Text = gVSCountDown.DateTimeTime.ToString("HH:mm:ss");
+            var btn = sender as Button;
+            if (btn.Content.ToString() == "CountDown")
+            {
+                gVSCountDown.UpDownTime = VSCountDown.UpDown.Down;
+            }
+            else if (btn.Content.ToString() == "CountUp")
+            {
+                gVSCountDown.UpDownTime = VSCountDown.UpDown.Up;
+            }
+            this.Frame.Navigate(typeof(CountDownPage), gVSCountDown);
         }
 
 

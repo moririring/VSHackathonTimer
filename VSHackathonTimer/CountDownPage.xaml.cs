@@ -21,7 +21,7 @@ namespace VSHackathonTimer
     /// </summary>
     public sealed partial class CountDownPage : VSHackathonTimer.Common.LayoutAwarePage
     {
-        DateTime gDateTime;
+        VSCountDown gDateTime;
         DateTime gStartDateTime;
         DispatcherTimer gTimer = null;
 
@@ -41,7 +41,8 @@ namespace VSHackathonTimer
         /// ディクショナリ。ページに初めてアクセスするとき、状態は null になります。</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            gStartDateTime = gDateTime = (DateTime)navigationParameter;
+            gDateTime = (VSCountDown)navigationParameter;
+            gStartDateTime = gDateTime.DateTimeTime;
         }
 
         /// <summary>
@@ -60,14 +61,16 @@ namespace VSHackathonTimer
             gTimer = new DispatcherTimer();
             gTimer.Interval = TimeSpan.FromSeconds(1);
             gTimer.Tick += timer_Tick;
-            gTimer.Start();
+            gTimer.Stop();
+            TimerTextBox.Text = gDateTime.DateTimeTime.ToString("HH:mm:ss");
         }
         private void timer_Tick(object sender, object e)
         {
-            if (gDateTime.ToString("HH:mm:ss") != "00:00:00")
+            gDateTime.CountDown();
+            TimerTextBox.Text = gDateTime.DateTimeTime.ToString("HH:mm:ss");
+
+            if (gDateTime.DateTimeTime.ToString("HH:mm:ss") != "00:00:00")
             {
-                gDateTime = gDateTime.AddSeconds(-1);
-                TimerTextBox.Text = gDateTime.ToString("HH:mm:ss");
             }
         }
 
@@ -87,8 +90,8 @@ namespace VSHackathonTimer
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            gDateTime = gStartDateTime;
-            TimerTextBox.Text = gDateTime.ToString("HH:mm:ss");
+            gDateTime.SetTimer(gStartDateTime);
+            TimerTextBox.Text = gDateTime.DateTimeTime.ToString("HH:mm:ss");
         }
     }
 }

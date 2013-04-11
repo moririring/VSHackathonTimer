@@ -64,7 +64,7 @@ namespace VSHackathonTimer
                 // ナビゲーション スタックが復元されていない場合、最初のページに移動します。
                 // このとき、必要な情報をナビゲーション パラメーターとして渡して、新しいページを
                 // 構成します
-                if (!rootFrame.Navigate(typeof(MainPage), args.Arguments))
+                if (!rootFrame.Navigate(typeof(CountDownSetPage), args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }

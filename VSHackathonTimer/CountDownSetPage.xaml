@@ -49,8 +49,9 @@
         <Button x:Name="M01PButton" Content="+" HorizontalAlignment="Left" Margin="700,186,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
         <Button x:Name="S10PButton" Content="+" HorizontalAlignment="Left" Margin="750,186,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
         <Button x:Name="S01PButton" Content="+" HorizontalAlignment="Left" Margin="800,186,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="580,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="ClearButton_Click"/>
-        <Button Content="Set" HorizontalAlignment="Left" Margin="715,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="SetButton_Click"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="550,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="ClearButton_Click"/>
+        <Button Content="CountDown" HorizontalAlignment="Left" Margin="631,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="SetButton_Click"/>
+        <Button Content="CountUp" HorizontalAlignment="Left" Margin="762,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="SetButton_Click"/>
 
         <VisualStateManager.VisualStateGroups>
 

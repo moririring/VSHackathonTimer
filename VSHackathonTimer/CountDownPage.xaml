@@ -37,7 +37,7 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         <TextBox x:Name="TimerTextBox" HorizontalAlignment="Center" Margin="0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" FontSize="200"/>
-        <Button x:Name="PauseButton" Content="Pause" HorizontalAlignment="Left" Margin="520,503,0,0" Grid.Row="1" VerticalAlignment="Top" Click="PauseButton_Click"/>
+        <Button x:Name="PauseButton" Content="Start" HorizontalAlignment="Left" Margin="520,503,0,0" Grid.Row="1" VerticalAlignment="Top" Click="PauseButton_Click"/>
         <Button x:Name="ClearButton" Content="Clear" HorizontalAlignment="Left" Margin="790,503,0,0" Grid.Row="1" VerticalAlignment="Top" Click="ClearButton_Click"/>
 
         <VisualStateManager.VisualStateGroups>

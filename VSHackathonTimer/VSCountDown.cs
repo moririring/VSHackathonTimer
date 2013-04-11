@@ -7,6 +7,11 @@ namespace VSHackathonTimer
 {
     public class VSCountDown
     {
+        public enum UpDown
+        {
+            Up,
+            Down,
+        };
         public enum PlusMinus
         {
             Plus,
@@ -31,6 +36,7 @@ namespace VSHackathonTimer
         public int IntTime { private set; get; }
         public string StringTime { private set; get; }
         public DateTime DateTimeTime { private set; get; }
+        public UpDown UpDownTime { set; get; }
 
         private void CalcIntTime()
         {
@@ -91,6 +97,11 @@ namespace VSHackathonTimer
             }
             CalcTime();
         }
+        public void SetTimer(DateTime gStartDateTime)
+        {
+            DateTimeTime = gStartDateTime;
+            CalcTimerFromDateTime();
+        }
         public void Clear()
         {
             for (int i = 0; i < timer.Length; i++)
@@ -101,11 +112,20 @@ namespace VSHackathonTimer
         }
         public void CountDown()
         {
-            if (DateTimeTime.ToString("HH:mm:ss") != "00:00:00")
+            if (UpDownTime == UpDown.Up)
             {
-                DateTimeTime = DateTimeTime.AddSeconds(-1);
-                CalcTimerFromDateTime();
+                DateTimeTime = DateTimeTime.AddSeconds(1);
             }
+            else
+            {
+                if (DateTimeTime.ToString("HH:mm:ss") != "00:00:00")
+                {
+                    DateTimeTime = DateTimeTime.AddSeconds(-1);
+                }
+            }
+            CalcTimerFromDateTime();
         }
+
+
     }
 }
