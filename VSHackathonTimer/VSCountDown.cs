@@ -32,11 +32,16 @@ namespace VSHackathonTimer
         {
             get { return timer; }
         }
-
+        public bool Minus { set; get; }
         public int IntTime { private set; get; }
         public string StringTime { private set; get; }
-        public DateTime DateTimeTime { private set; get; }
+        public DateTime DateTimeTime { set; get; }
         public UpDown UpDownTime { set; get; }
+
+        public VSCountDown()
+        {
+            CalcTime();
+        }
 
         private void CalcIntTime()
         {
@@ -51,6 +56,10 @@ namespace VSHackathonTimer
         private void CalcStringTime()
         {
             var st = new StringBuilder();
+            if (Minus == true)
+            {
+                st.Append("-");
+            }
             foreach (var t in timer.Reverse().Select((v, i) => new { v, i }))
             {
                 //最初以外2回毎に:をつける
@@ -99,6 +108,7 @@ namespace VSHackathonTimer
         }
         public void SetTimer(DateTime gStartDateTime)
         {
+            Minus = false;
             DateTimeTime = gStartDateTime;
             CalcTimerFromDateTime();
         }
@@ -118,10 +128,12 @@ namespace VSHackathonTimer
             }
             else
             {
-                if (DateTimeTime.ToString("HH:mm:ss") != "00:00:00")
+                if (DateTimeTime.ToString("HH:mm:ss") == "00:00:00")
                 {
-                    DateTimeTime = DateTimeTime.AddSeconds(-1);
+                    Minus = true;
                 }
+                var pm = (Minus) ? 1 : -1;
+                DateTimeTime = DateTimeTime.AddSeconds(pm);
             }
             CalcTimerFromDateTime();
         }

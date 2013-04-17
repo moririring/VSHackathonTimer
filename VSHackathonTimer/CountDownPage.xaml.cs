@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -43,6 +44,7 @@ namespace VSHackathonTimer
         {
             gDateTime = (VSCountDown)navigationParameter;
             gStartDateTime = gDateTime.DateTimeTime;
+            TimerText.Text = gDateTime.StringTime;
         }
 
         /// <summary>
@@ -62,15 +64,18 @@ namespace VSHackathonTimer
             gTimer.Interval = TimeSpan.FromSeconds(1);
             gTimer.Tick += timer_Tick;
             gTimer.Stop();
-            TimerTextBox.Text = gDateTime.DateTimeTime.ToString("HH:mm:ss");
         }
         private void timer_Tick(object sender, object e)
         {
             gDateTime.CountDown();
-            TimerTextBox.Text = gDateTime.DateTimeTime.ToString("HH:mm:ss");
-
-            if (gDateTime.DateTimeTime.ToString("HH:mm:ss") != "00:00:00")
+            TimerText.Text = gDateTime.StringTime;
+            if (gDateTime.Minus)
             {
+                TimerText.Foreground = new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+                TimerText.Foreground = new SolidColorBrush(Colors.White);
             }
         }
 
@@ -91,7 +96,10 @@ namespace VSHackathonTimer
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             gDateTime.SetTimer(gStartDateTime);
-            TimerTextBox.Text = gDateTime.DateTimeTime.ToString("HH:mm:ss");
+            TimerText.Text = gDateTime.StringTime;
+            TimerText.Foreground = new SolidColorBrush(Colors.White);
+            PauseButton.Content = "Pause";
+            PauseButton_Click(sender, e);
         }
     }
 }

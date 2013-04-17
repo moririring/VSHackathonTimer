@@ -52,6 +52,8 @@
         <Button Content="Clear" HorizontalAlignment="Left" Margin="550,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="ClearButton_Click"/>
         <Button Content="CountDown" HorizontalAlignment="Left" Margin="631,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="SetButton_Click"/>
         <Button Content="CountUp" HorizontalAlignment="Left" Margin="762,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="SetButton_Click"/>
+        <Button Content="5m" HorizontalAlignment="Left" Margin="925,260,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Button Content="50m" HorizontalAlignment="Left" Margin="925,303,0,0" Grid.Row="1" VerticalAlignment="Top"/>
 
         <VisualStateManager.VisualStateGroups>
 
