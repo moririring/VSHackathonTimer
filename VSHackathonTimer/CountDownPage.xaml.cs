@@ -77,6 +77,16 @@ namespace VSHackathonTimer
             {
                 TimerText.Foreground = new SolidColorBrush(Colors.White);
             }
+            if (TimerText.Text == "00:00:00")
+            {
+                TimeOver.Play();
+                StopButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            if (TimerText.Text == DoraTextBox.Text)
+            {
+                Dora.Play();
+            }
+            
         }
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
@@ -85,6 +95,7 @@ namespace VSHackathonTimer
             {
                 PauseButton.Content = "Start";
                 gTimer.Stop();
+                TimeOver.Stop();
             }
             else if (PauseButton.Content.ToString() == "Start")
             {
@@ -95,11 +106,18 @@ namespace VSHackathonTimer
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
+            TimeOver.Stop();
             gDateTime.SetTimer(gStartDateTime);
             TimerText.Text = gDateTime.StringTime;
             TimerText.Foreground = new SolidColorBrush(Colors.White);
             PauseButton.Content = "Pause";
             PauseButton_Click(sender, e);
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            TimeOver.Stop();
+            StopButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
     }
 }

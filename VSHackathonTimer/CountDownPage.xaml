@@ -13,7 +13,7 @@
     <Page.Resources>
 
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">My Application</x:String>
+        <x:String x:Key="AppName">VS Hackathon Club</x:String>
     </Page.Resources>
 
     <!--
@@ -42,7 +42,11 @@
         </Grid>
         <Button x:Name="PauseButton" Content="Start" HorizontalAlignment="Left" Margin="520,503,0,0" Grid.Row="1" VerticalAlignment="Top" Click="PauseButton_Click"/>
         <Button x:Name="ClearButton" Content="Clear" HorizontalAlignment="Left" Margin="790,503,0,0" Grid.Row="1" VerticalAlignment="Top" Click="ClearButton_Click" Grid.ColumnSpan="2"/>
-        <TextBlock x:Name="TimerText" HorizontalAlignment="Left" Margin="0,86,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="300" Height="412" Width="1356" Grid.ColumnSpan="2" TextAlignment="Center" FontFamily="Global User Interface"/>
+        <TextBlock x:Name="TimerText" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="300" Height="412" Width="1356" Grid.ColumnSpan="2" TextAlignment="Center" FontFamily="Global User Interface"/>
+        <MediaElement x:Name="TimeOver" Source="siren01.wav" AutoPlay="False" IsLooping="True" />
+        <MediaElement x:Name="Dora" Source="dora01.wav" AutoPlay="False" />
+        <Button x:Name="StopButton" Content="Stop" HorizontalAlignment="Left" Margin="652,503,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.55,-0.421" Visibility="Collapsed" Click="StopButton_Click"/>
+        <TextBox x:Name="DoraTextBox" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="00:01:00" VerticalAlignment="Center" FontSize="72" Margin="176,465,59,55" Grid.Column="1"/>
 
         <VisualStateManager.VisualStateGroups>
 
