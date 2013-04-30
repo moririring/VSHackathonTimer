@@ -43,6 +43,14 @@ namespace VSHackathonTimer
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             gDateTime = (VSCountDown)navigationParameter;
+
+            pageTitle.Text = gDateTime.Title;
+
+            gTimer = new DispatcherTimer();
+            gTimer.Interval = TimeSpan.FromSeconds(1);
+            gTimer.Tick += timer_Tick;
+            gTimer.Stop();
+
             gStartDateTime = gDateTime.DateTimeTime;
             TimerText.Text = gDateTime.StringTime;
         }
@@ -57,14 +65,6 @@ namespace VSHackathonTimer
         {
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            gTimer = new DispatcherTimer();
-            gTimer.Interval = TimeSpan.FromSeconds(1);
-            gTimer.Tick += timer_Tick;
-            gTimer.Stop();
-        }
         private void timer_Tick(object sender, object e)
         {
             gDateTime.CountDown();

@@ -13,15 +13,28 @@
     <Page.Resources>
 
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">My Application</x:String>
+        <x:String x:Key="AppName">CountDownTimer</x:String>
     </Page.Resources>
+    <common:LayoutAwarePage.BottomAppBar>
+        <AppBar Margin="0,0,0,-72">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal"/>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal"/>
+            </Grid>
+        </AppBar>
+
+    </common:LayoutAwarePage.BottomAppBar>
 
     <!--
         This grid acts as a root panel for the page that defines two rows:
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
-    <Grid Style="{StaticResource LayoutRootStyle}">
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource BackGrondBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
@@ -36,24 +49,25 @@
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
-        <TextBox x:Name="TimerTextBox" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Center" FontSize="72"/>
-        <Button x:Name="H10MButton" Content="-" HorizontalAlignment="Left" Margin="550,386,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="H01MButton" Content="-" HorizontalAlignment="Left" Margin="600,386,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="M10MButton" Content="-" HorizontalAlignment="Left" Margin="650,386,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="M01MButton" Content="-" HorizontalAlignment="Left" Margin="700,386,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="S10MButton" Content="-" HorizontalAlignment="Left" Margin="750,386,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="S01MButton" Content="-" HorizontalAlignment="Left" Margin="800,386,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="H10PButton" Content="+" HorizontalAlignment="Left" Margin="550,186,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="H01PButton" Content="+" HorizontalAlignment="Left" Margin="600,186,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="M10PButton" Content="+" HorizontalAlignment="Left" Margin="650,186,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="M01PButton" Content="+" HorizontalAlignment="Left" Margin="700,186,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="S10PButton" Content="+" HorizontalAlignment="Left" Margin="750,186,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button x:Name="S01PButton" Content="+" HorizontalAlignment="Left" Margin="800,186,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="550,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="ClearButton_Click"/>
-        <Button Content="CountDown" HorizontalAlignment="Left" Margin="631,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="SetButton_Click"/>
-        <Button Content="CountUp" HorizontalAlignment="Left" Margin="762,464,0,0" Grid.Row="1" VerticalAlignment="Top" Click="SetButton_Click"/>
-        <Button Content="5m" HorizontalAlignment="Left" Margin="925,260,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Button Content="50m" HorizontalAlignment="Left" Margin="925,303,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <TextBox x:Name="TimerTextBox" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Center" FontSize="72" Margin="417,168,660,352"/>
+        <TextBox x:Name="TitleTextBox" HorizontalAlignment="Center" Margin="445,366,559,223" Grid.Row="1" TextWrapping="Wrap" Text="Title" VerticalAlignment="Center"  FontSize="11" Width="362"/>
+        <Button x:Name="H10MButton" Content="-" HorizontalAlignment="Left" Margin="417,294,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="H01MButton" Content="-" HorizontalAlignment="Left" Margin="467,294,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="M10MButton" Content="-" HorizontalAlignment="Left" Margin="517,294,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="M01MButton" Content="-" HorizontalAlignment="Left" Margin="567,294,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="S10MButton" Content="-" HorizontalAlignment="Left" Margin="617,294,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="S01MButton" Content="-" HorizontalAlignment="Left" Margin="667,294,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="H10PButton" Content="+" HorizontalAlignment="Left" Margin="417,94,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="H01PButton" Content="+" HorizontalAlignment="Left" Margin="467,94,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="M10PButton" Content="+" HorizontalAlignment="Left" Margin="517,94,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="M01PButton" Content="+" HorizontalAlignment="Left" Margin="567,94,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="S10PButton" Content="+" HorizontalAlignment="Left" Margin="617,94,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button x:Name="S01PButton" Content="+" HorizontalAlignment="Left" Margin="667,94,0,0" Grid.Row="1" VerticalAlignment="Top" Click="TimerButton_Click"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="401,462,0,0" Grid.Row="1" VerticalAlignment="Top" Click="ClearButton_Click"/>
+        <Button Content="CountDown" HorizontalAlignment="Left" Margin="482,462,0,0" Grid.Row="1" VerticalAlignment="Top" Click="SetButton_Click"/>
+        <Button Content="CountUp" HorizontalAlignment="Left" Margin="613,462,0,0" Grid.Row="1" VerticalAlignment="Top" Click="SetButton_Click"/>
+        <Button x:Name="M5Button" Content="5m" HorizontalAlignment="Left" Margin="792,168,0,0" Grid.Row="1" VerticalAlignment="Top" Click="M5Button_Click"/>
+        <Button x:Name="M50Button" Content="50m" HorizontalAlignment="Left" Margin="792,211,0,0" Grid.Row="1" VerticalAlignment="Top" Click="M50Button_Click"/>
 
         <VisualStateManager.VisualStateGroups>
 

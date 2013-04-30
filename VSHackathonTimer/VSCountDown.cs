@@ -37,12 +37,12 @@ namespace VSHackathonTimer
         public string StringTime { private set; get; }
         public DateTime DateTimeTime { set; get; }
         public UpDown UpDownTime { set; get; }
+        public string Title { set; get; }
 
         public VSCountDown()
         {
             CalcTime();
         }
-
         private void CalcIntTime()
         {
             IntTime = 0;

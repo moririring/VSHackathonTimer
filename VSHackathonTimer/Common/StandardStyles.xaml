@@ -1827,4 +1827,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <SolidColorBrush x:Key="BackGrondBrush" Color="#FF1FAE71"/>
 </ResourceDictionary>

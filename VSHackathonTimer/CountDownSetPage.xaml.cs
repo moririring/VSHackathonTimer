@@ -39,6 +39,23 @@ namespace VSHackathonTimer
         /// ディクショナリ。ページに初めてアクセスするとき、状態は null になります。</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            if (pageState != null && pageState.ContainsKey("Timer"))
+            {
+                //TitleTextBox.Text = pageState["Title"].ToString();
+                
+                DateTime dt = (DateTime)pageState["Timer"];
+                gVSCountDown.SetTimer(dt);
+                TimerTextBox.Text = gVSCountDown.StringTime;
+
+            }
+            var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            if (roamingSettings.Values.ContainsKey("Title"))
+            {
+                //TitleTextBox.Text = pageState["Title"].ToString();
+
+                TitleTextBox.Text = roamingSettings.Values["Title"].ToString();
+
+            }
         }
 
         /// <summary>
@@ -49,6 +66,11 @@ namespace VSHackathonTimer
         /// <param name="pageState">シリアル化可能な状態で作成される空のディクショナリ。</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+            //pageState["Title"] = TitleTextBox.Text;
+            pageState["Timer"] = gVSCountDown.DateTimeTime;
+
+            //TimerTextBox.Text = gVSCountDown.StringTime;
+
         }
 
         private void TimerButton_Click(object sender, RoutedEventArgs e)
@@ -94,6 +116,18 @@ namespace VSHackathonTimer
             gVSCountDown.Clear();
             TimerTextBox.Text = gVSCountDown.StringTime;
         }
+        private void M5Button_Click(object sender, RoutedEventArgs e)
+        {
+            gVSCountDown.SetTimer(new DateTime(0).AddMinutes(5));
+            TimerTextBox.Text = gVSCountDown.StringTime;
+        }
+
+        private void M50Button_Click(object sender, RoutedEventArgs e)
+        {
+            gVSCountDown.SetTimer(new DateTime(0).AddMinutes(50));
+            TimerTextBox.Text = gVSCountDown.StringTime;
+        }
+
         private void SetButton_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
@@ -105,8 +139,16 @@ namespace VSHackathonTimer
             {
                 gVSCountDown.UpDownTime = VSCountDown.UpDown.Up;
             }
+            gVSCountDown.Title = TitleTextBox.Text;
+
+            //
+            var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            roamingSettings.Values["Title"] = TitleTextBox.Text;
+
             this.Frame.Navigate(typeof(CountDownPage), gVSCountDown);
         }
+
+
 
 
     }
