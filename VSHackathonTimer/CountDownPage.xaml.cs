@@ -67,7 +67,7 @@ namespace VSHackathonTimer
 
         private void timer_Tick(object sender, object e)
         {
-            gDateTime.CountDown();
+            gDateTime.Counter();
             TimerText.Text = gDateTime.StringTime;
             if (gDateTime.Minus)
             {

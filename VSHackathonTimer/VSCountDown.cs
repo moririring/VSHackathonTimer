@@ -120,7 +120,7 @@ namespace VSHackathonTimer
             }
             CalcTime();
         }
-        public void CountDown()
+        public void Counter()
         {
             if (UpDownTime == UpDown.Up)
             {
