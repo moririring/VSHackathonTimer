@@ -72,18 +72,26 @@ namespace VSHackathonTimerTest
             Assert.IsTrue(cd.StringTime == "00:00:00");
         }
         [TestMethod]
-        public void カウントダウンタイマーをカウントアップ()
+        public void カウントダウンタイマーを10秒セットして1プラス()
         {
             cd.SetTimer(VSCountDown.PlusMinus.Plus, VSCountDown.Digit.Digit_s10);
             cd.CountDown();
             Assert.IsTrue(cd.StringTime == "00:00:11");
         }
         [TestMethod]
-        public void カウントダウンタイマーをカウントダウン()
+        public void カウントダウンタイマーのマイナスチェック()
         {
             cd.UpDownTime = VSCountDown.UpDown.Down;
             cd.CountDown();
             Assert.IsTrue(cd.StringTime == "-00:00:01");
+        }
+        [TestMethod]
+        public void カウントアップタイマーをカウントアップ()
+        {
+            cd.UpDownTime = VSCountDown.UpDown.Up;
+            cd.SetTimer(VSCountDown.PlusMinus.Minus, VSCountDown.Digit.Digit_m01);
+            cd.CountDown();
+            Assert.IsTrue(cd.StringTime == "00:00:01");
         }
     }
 }
