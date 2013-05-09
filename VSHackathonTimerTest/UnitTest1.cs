@@ -94,5 +94,13 @@ namespace VSHackathonTimerTest
             _cd.Counter();
             Assert.IsTrue(_cd.Minus == true);
         }
+        [TestMethod]
+        public void カウントアップタイマーをカウントアップ()
+        {
+            cd.UpDownTime = VSCountDown.UpDown.Up;
+            cd.SetTimer(VSCountDown.PlusMinus.Minus, VSCountDown.Digit.Digit_m01);
+            cd.CountDown();
+            Assert.IsTrue(cd.StringTime == "00:00:01");
+        }
     }
 }
