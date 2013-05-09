@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using VSHackathonTimer.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // 基本ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234237 を参照してください
 
@@ -20,12 +11,12 @@ namespace VSHackathonTimer
     /// <summary>
     /// 多くのアプリケーションに共通の特性を指定する基本ページ。
     /// </summary>
-    public sealed partial class CountDownSetPage : VSHackathonTimer.Common.LayoutAwarePage
+    public sealed partial class CountDownSetPage
     {
-        VSCountDown gVSCountDown = new VSCountDown(); 
+        readonly VsCountDown _gVsCountDown = new VsCountDown(); 
         public CountDownSetPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         /// <summary>
@@ -39,13 +30,13 @@ namespace VSHackathonTimer
         /// ディクショナリ。ページに初めてアクセスするとき、状態は null になります。</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            if (pageState != null && pageState.ContainsKey("Timer"))
+            if (pageState != null && pageState.ContainsKey("IntTimes"))
             {
                 //TitleTextBox.Text = pageState["Title"].ToString();
                 
-                DateTime dt = (DateTime)pageState["Timer"];
-                gVSCountDown.SetTimer(dt);
-                TimerTextBox.Text = gVSCountDown.StringTime;
+                var dt = (DateTime)pageState["IntTimes"];
+                _gVsCountDown.SetTimer(dt);
+                TimerTextBox.Text = _gVsCountDown.StringTime;
 
             }
             var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
@@ -67,7 +58,7 @@ namespace VSHackathonTimer
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
             //pageState["Title"] = TitleTextBox.Text;
-            pageState["Timer"] = gVSCountDown.DateTimeTime;
+            pageState["IntTimes"] = _gVsCountDown.DateTimeTime;
 
             //TimerTextBox.Text = gVSCountDown.StringTime;
 
@@ -77,75 +68,78 @@ namespace VSHackathonTimer
         {
             var btn = sender as Button;
 
-            VSCountDown.PlusMinus pm = VSCountDown.PlusMinus.Plus;
-            VSCountDown.Digit digit = VSCountDown.Digit.Digit_s01;
+            var pm = VsCountDown.PlusMinus.Plus;
+            var digit = VsCountDown.Digit.DigitS01;
 
-            if (btn.Name == "S01PButton") pm = VSCountDown.PlusMinus.Plus;
-            if (btn.Name == "S10PButton") pm = VSCountDown.PlusMinus.Plus;
-            if (btn.Name == "M01PButton") pm = VSCountDown.PlusMinus.Plus;
-            if (btn.Name == "M10PButton") pm = VSCountDown.PlusMinus.Plus;
-            if (btn.Name == "H01PButton") pm = VSCountDown.PlusMinus.Plus;
-            if (btn.Name == "H10PButton") pm = VSCountDown.PlusMinus.Plus;
+            if (btn == null) return;
+            if (btn.Name == "S01PButton") pm = VsCountDown.PlusMinus.Plus;
+            if (btn.Name == "S10PButton") pm = VsCountDown.PlusMinus.Plus;
+            if (btn.Name == "M01PButton") pm = VsCountDown.PlusMinus.Plus;
+            if (btn.Name == "M10PButton") pm = VsCountDown.PlusMinus.Plus;
+            if (btn.Name == "H01PButton") pm = VsCountDown.PlusMinus.Plus;
+            if (btn.Name == "H10PButton") pm = VsCountDown.PlusMinus.Plus;
 
-            if (btn.Name == "S01MButton") pm = VSCountDown.PlusMinus.Minus;
-            if (btn.Name == "S10MButton") pm = VSCountDown.PlusMinus.Minus;
-            if (btn.Name == "M01MButton") pm = VSCountDown.PlusMinus.Minus;
-            if (btn.Name == "M10MButton") pm = VSCountDown.PlusMinus.Minus;
-            if (btn.Name == "H01MButton") pm = VSCountDown.PlusMinus.Minus;
-            if (btn.Name == "H10MButton") pm = VSCountDown.PlusMinus.Minus;
+            if (btn.Name == "S01MButton") pm = VsCountDown.PlusMinus.Minus;
+            if (btn.Name == "S10MButton") pm = VsCountDown.PlusMinus.Minus;
+            if (btn.Name == "M01MButton") pm = VsCountDown.PlusMinus.Minus;
+            if (btn.Name == "M10MButton") pm = VsCountDown.PlusMinus.Minus;
+            if (btn.Name == "H01MButton") pm = VsCountDown.PlusMinus.Minus;
+            if (btn.Name == "H10MButton") pm = VsCountDown.PlusMinus.Minus;
 
-            if (btn.Name == "S01PButton") digit = VSCountDown.Digit.Digit_s01;
-            if (btn.Name == "S10PButton") digit = VSCountDown.Digit.Digit_s10;
-            if (btn.Name == "M01PButton") digit = VSCountDown.Digit.Digit_m01;
-            if (btn.Name == "M10PButton") digit = VSCountDown.Digit.Digit_m10;
-            if (btn.Name == "H01PButton") digit = VSCountDown.Digit.Digit_h01;
-            if (btn.Name == "H10PButton") digit = VSCountDown.Digit.Digit_h10;
+            if (btn.Name == "S01PButton") digit = VsCountDown.Digit.DigitS01;
+            if (btn.Name == "S10PButton") digit = VsCountDown.Digit.DigitS10;
+            if (btn.Name == "M01PButton") digit = VsCountDown.Digit.DigitM01;
+            if (btn.Name == "M10PButton") digit = VsCountDown.Digit.DigitM10;
+            if (btn.Name == "H01PButton") digit = VsCountDown.Digit.DigitH01;
+            if (btn.Name == "H10PButton") digit = VsCountDown.Digit.DigitH10;
 
-            if (btn.Name == "S01MButton") digit = VSCountDown.Digit.Digit_s01;
-            if (btn.Name == "S10MButton") digit = VSCountDown.Digit.Digit_s10;
-            if (btn.Name == "M01MButton") digit = VSCountDown.Digit.Digit_m01;
-            if (btn.Name == "M10MButton") digit = VSCountDown.Digit.Digit_m10;
-            if (btn.Name == "H01MButton") digit = VSCountDown.Digit.Digit_h01;
-            if (btn.Name == "H10MButton") digit = VSCountDown.Digit.Digit_h10;
+            if (btn.Name == "S01MButton") digit = VsCountDown.Digit.DigitS01;
+            if (btn.Name == "S10MButton") digit = VsCountDown.Digit.DigitS10;
+            if (btn.Name == "M01MButton") digit = VsCountDown.Digit.DigitM01;
+            if (btn.Name == "M10MButton") digit = VsCountDown.Digit.DigitM10;
+            if (btn.Name == "H01MButton") digit = VsCountDown.Digit.DigitH01;
+            if (btn.Name == "H10MButton") digit = VsCountDown.Digit.DigitH10;
 
-            gVSCountDown.SetTimer(pm, digit);
-            TimerTextBox.Text = gVSCountDown.StringTime;
+            _gVsCountDown.SetTimer(pm, digit);
+            TimerTextBox.Text = _gVsCountDown.StringTime;
         }
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            gVSCountDown.Clear();
-            TimerTextBox.Text = gVSCountDown.StringTime;
+            _gVsCountDown.Clear();
+            TimerTextBox.Text = _gVsCountDown.StringTime;
         }
         private void M5Button_Click(object sender, RoutedEventArgs e)
         {
-            gVSCountDown.SetTimer(new DateTime(0).AddMinutes(5));
-            TimerTextBox.Text = gVSCountDown.StringTime;
+            _gVsCountDown.SetTimer(new DateTime(0).AddMinutes(5));
+            TimerTextBox.Text = _gVsCountDown.StringTime;
         }
 
         private void M50Button_Click(object sender, RoutedEventArgs e)
         {
-            gVSCountDown.SetTimer(new DateTime(0).AddMinutes(50));
-            TimerTextBox.Text = gVSCountDown.StringTime;
+            _gVsCountDown.SetTimer(new DateTime(0).AddMinutes(50));
+            TimerTextBox.Text = _gVsCountDown.StringTime;
         }
 
         private void SetButton_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if (btn.Content.ToString() == "CountDown")
+            if (btn != null && (btn.Content != null && btn.Content.ToString() == "CountDown"))
             {
-                gVSCountDown.UpDownTime = VSCountDown.UpDown.Down;
+                _gVsCountDown.UpDownTime = VsCountDown.UpDown.Down;
             }
-            else if (btn.Content.ToString() == "CountUp")
+            else if (btn != null && (btn.Content != null && (btn.Content.ToString() == "CountUp")))
             {
-                gVSCountDown.UpDownTime = VSCountDown.UpDown.Up;
+                _gVsCountDown.UpDownTime = VsCountDown.UpDown.Up;
             }
-            gVSCountDown.Title = TitleTextBox.Text;
+            if (TitleTextBox != null) _gVsCountDown.Title = TitleTextBox.Text;
+
+            _gVsCountDown.SetStart();
 
             //
             var roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
-            roamingSettings.Values["Title"] = TitleTextBox.Text;
+            if (TitleTextBox != null) roamingSettings.Values["Title"] = TitleTextBox.Text;
 
-            this.Frame.Navigate(typeof(CountDownPage), gVSCountDown);
+            Frame.Navigate(typeof(CountDownPage), _gVsCountDown);
         }
 
 

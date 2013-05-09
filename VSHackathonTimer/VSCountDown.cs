@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace VSHackathonTimer
 {
-    public class VSCountDown
+    public class VsCountDown
     {
         public enum UpDown
         {
@@ -19,35 +18,37 @@ namespace VSHackathonTimer
         };
         public enum Digit
         {
-            Digit_s01,
-            Digit_s10,
-            Digit_m01,
-            Digit_m10,
-            Digit_h01,
-            Digit_h10,
-            Digit_Max,
+            DigitS01,
+            DigitS10,
+            DigitM01,
+            DigitM10,
+            DigitH01,
+            DigitH10,
+            DigitMax,
         };
-        public int[] timer = new int[] { 0, 0, 0, 0, 0, 0 };
-        public int[] Timer
-        {
-            get { return timer; }
-        }
-        public bool Minus { set; get; }
-        public int IntTime { private set; get; }
+
+        private int[] IntTimes { get; set; }
+        private int IntTime {  set; get; }
         public string StringTime { private set; get; }
         public DateTime DateTimeTime { set; get; }
+
+        public bool Minus { set; get; }
+        public DateTime Start { set; get; }
+        public DateTime End { set; get; }
         public UpDown UpDownTime { set; get; }
         public string Title { set; get; }
 
-        public VSCountDown()
+        public VsCountDown()
         {
+            IntTimes = new[] { 0, 0, 0, 0, 0, 0 };
             CalcTime();
         }
+
         private void CalcIntTime()
         {
             IntTime = 0;
-            int dig = 1;
-            foreach (var t in timer)
+            var dig = 1;
+            foreach (var t in IntTimes)
             {
                 IntTime += t * dig;
                 dig *= 10;
@@ -56,11 +57,11 @@ namespace VSHackathonTimer
         private void CalcStringTime()
         {
             var st = new StringBuilder();
-            if (Minus == true)
+            if (UpDownTime == UpDown.Down && Minus)
             {
                 st.Append("-");
             }
-            foreach (var t in timer.Reverse().Select((v, i) => new { v, i }))
+            foreach (var t in IntTimes.Reverse().Select((v, i) => new { v, i }))
             {
                 //最初以外2回毎に:をつける
                 if (t.i % 2 == 0 && t.i != 0)
@@ -71,71 +72,72 @@ namespace VSHackathonTimer
             }
             StringTime = st.ToString();
         }
-
         private void CalcTime()
         {
             CalcIntTime();
             CalcStringTime();
             //DateTime
             DateTimeTime = new DateTime(0);
-            DateTimeTime = DateTimeTime.AddSeconds(timer[(int)Digit.Digit_s10] * 10 + timer[(int)Digit.Digit_s01] * 1);
-            DateTimeTime = DateTimeTime.AddMinutes(timer[(int)Digit.Digit_m10] * 10 + timer[(int)Digit.Digit_m01] * 1);
-            DateTimeTime = DateTimeTime.AddHours(timer[(int)Digit.Digit_h10] * 10 + timer[(int)Digit.Digit_h01] * 1);
+            DateTimeTime = DateTimeTime.AddSeconds(IntTimes[(int)Digit.DigitS10] * 10 + IntTimes[(int)Digit.DigitS01] * 1);
+            DateTimeTime = DateTimeTime.AddMinutes(IntTimes[(int)Digit.DigitM10] * 10 + IntTimes[(int)Digit.DigitM01] * 1);
+            DateTimeTime = DateTimeTime.AddHours(IntTimes[(int)Digit.DigitH10] * 10 + IntTimes[(int)Digit.DigitH01] * 1);
 
         }
-        private void CalcTimerFromDateTime()
-        {
-            timer[(int)Digit.Digit_s01] = DateTimeTime.Second % 10;
-            timer[(int)Digit.Digit_s10] = DateTimeTime.Second / 10;
-            timer[(int)Digit.Digit_m01] = DateTimeTime.Minute % 10;
-            timer[(int)Digit.Digit_m10] = DateTimeTime.Minute / 10;
-            timer[(int)Digit.Digit_h01] = DateTimeTime.Hour % 10;
-            timer[(int)Digit.Digit_h10] = DateTimeTime.Hour / 10;
-            CalcIntTime();
-            CalcStringTime();
-        }
+
+
         public void SetTimer(PlusMinus ud, Digit p)
         {
             if (ud == PlusMinus.Plus)
             {
-                timer[(int)p] = (timer[(int)p] + 1) % 10;
+                IntTimes[(int)p] = (IntTimes[(int)p] + 1) % 10;
             }
             else
             {
-                timer[(int)p] = (timer[(int)p] + (10 - 1)) % 10;
+                IntTimes[(int)p] = (IntTimes[(int)p] + (10 - 1)) % 10;
             }
             CalcTime();
         }
-        public void SetTimer(DateTime gStartDateTime)
+        public void SetTimer(DateTime time)
         {
-            Minus = false;
-            DateTimeTime = gStartDateTime;
-            CalcTimerFromDateTime();
+            IntTimes[(int)Digit.DigitS01] = time.Second % 10;
+            IntTimes[(int)Digit.DigitS10] = time.Second / 10;
+            IntTimes[(int)Digit.DigitM01] = time.Minute % 10;
+            IntTimes[(int)Digit.DigitM10] = time.Minute / 10;
+            IntTimes[(int)Digit.DigitH01] = time.Hour % 10;
+            IntTimes[(int)Digit.DigitH10] = time.Hour / 10;
+            CalcTime();
         }
         public void Clear()
         {
-            for (int i = 0; i < timer.Length; i++)
+            for (var i = 0; i < IntTimes.Length; i++)
             {
-                timer[i] = 0;
+                IntTimes[i] = 0;
             }
             CalcTime();
         }
-        public void Counter()
+        public void SetStart()
         {
+            Minus = false;
             if (UpDownTime == UpDown.Up)
             {
-                DateTimeTime = DateTimeTime.AddSeconds(1);
+                Start = new DateTime(0);
+                End = DateTimeTime;
             }
             else
             {
-                if (DateTimeTime.ToString("HH:mm:ss") == "00:00:00")
-                {
-                    Minus = true;
-                }
-                var pm = (Minus) ? 1 : -1;
-                DateTimeTime = DateTimeTime.AddSeconds(pm);
+                Start = DateTimeTime;
+                End = new DateTime(0);
             }
-            CalcTimerFromDateTime();
+            SetTimer(Start);
+        }
+        public void Counter()
+        {
+            if (DateTimeTime.ToString("HH:mm:ss") == End.ToString("HH:mm:ss"))
+            {
+                Minus = true;
+            }
+            var pm = (UpDownTime == UpDown.Up || Minus) ? 1 : -1;
+            SetTimer(DateTimeTime.AddSeconds(pm));
         }
 
 

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
+using System;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using VSHackathonTimer;
 
@@ -10,80 +8,91 @@ namespace VSHackathonTimerTest
     [TestClass]
     public class UnitTest1
     {
-        VSCountDown cd = new VSCountDown();
+        readonly VsCountDown _cd = new VsCountDown();
 
-        [TestMethod]
-        public void カウントダウンタイマーから時間取得()
-        {
-            Assert.IsTrue(cd.IntTime == 0);
-        }
         [TestMethod]
         public void カウントダウンタイマーの３桁目を減少()
         {
-            cd.SetTimer(VSCountDown.PlusMinus.Minus, VSCountDown.Digit.Digit_m01);
-            Assert.IsTrue(cd.IntTime == 900);
+            _cd.SetTimer(VsCountDown.PlusMinus.Minus, VsCountDown.Digit.DigitM01);
+            Assert.IsTrue(_cd.StringTime == "00:09:00");
         }
         [TestMethod]
         public void カウントダウンタイマーの3桁目2回減少()
         {
-            cd.SetTimer(VSCountDown.PlusMinus.Minus, VSCountDown.Digit.Digit_m01);
-            cd.SetTimer(VSCountDown.PlusMinus.Minus, VSCountDown.Digit.Digit_m01);
-            Assert.IsTrue(cd.IntTime == 800);
+            _cd.SetTimer(VsCountDown.PlusMinus.Minus, VsCountDown.Digit.DigitM01);
+            _cd.SetTimer(VsCountDown.PlusMinus.Minus, VsCountDown.Digit.DigitM01);
+            Assert.IsTrue(_cd.StringTime == "00:08:00");
         }
         [TestMethod]
         public void カウントダウンタイマーの2桁目を増加()
         {
-            cd.SetTimer(VSCountDown.PlusMinus.Plus, VSCountDown.Digit.Digit_s10);
-            Assert.IsTrue(cd.IntTime == 10);
+            _cd.SetTimer(VsCountDown.PlusMinus.Plus, VsCountDown.Digit.DigitS10);
+            Assert.IsTrue(_cd.StringTime == "00:00:10");
         }
         [TestMethod]
-        public void カウントダウンタイマーの2桁目を増加した時間()
+        public void カウントダウンタイマーの5と6桁目を増加()
         {
-            cd.SetTimer(VSCountDown.PlusMinus.Plus, VSCountDown.Digit.Digit_s10);
-            Assert.IsTrue(cd.DateTimeTime.ToString("HH:mm:ss") == "00:00:10");
-        }
-        [TestMethod]
-        public void カウントダウンタイマーの4と5桁目を増加()
-        {
-            cd.SetTimer(VSCountDown.PlusMinus.Plus, VSCountDown.Digit.Digit_h01);
-            cd.SetTimer(VSCountDown.PlusMinus.Plus, VSCountDown.Digit.Digit_h10);
-            Assert.IsTrue(cd.IntTime == 110000);
-        }
-        [TestMethod]
-        public void カウントダウンタイマーの4と5桁目を増加した時間()
-        {
-            cd.SetTimer(VSCountDown.PlusMinus.Plus, VSCountDown.Digit.Digit_h01);
-            cd.SetTimer(VSCountDown.PlusMinus.Plus, VSCountDown.Digit.Digit_h10);
-            Assert.IsTrue(cd.DateTimeTime.ToString("HH:mm:ss") == "11:00:00");
+            _cd.SetTimer(VsCountDown.PlusMinus.Plus, VsCountDown.Digit.DigitH01);
+            _cd.SetTimer(VsCountDown.PlusMinus.Plus, VsCountDown.Digit.DigitH10);
+            Assert.IsTrue(_cd.StringTime == "11:00:00");
         }
         [TestMethod]
         public void カウントダウンタイマーの99分をチェック()
         {
-            cd.SetTimer(VSCountDown.PlusMinus.Minus, VSCountDown.Digit.Digit_m01);
-            cd.SetTimer(VSCountDown.PlusMinus.Minus, VSCountDown.Digit.Digit_m10);
-            Assert.IsTrue(cd.StringTime == "00:99:00");
+            _cd.SetTimer(VsCountDown.PlusMinus.Minus, VsCountDown.Digit.DigitM01);
+            _cd.SetTimer(VsCountDown.PlusMinus.Minus, VsCountDown.Digit.DigitM10);
+            Assert.IsTrue(_cd.StringTime == "00:99:00");
         }
         [TestMethod]
         public void カウントダウンタイマーをクリア()
         {
-            cd.SetTimer(VSCountDown.PlusMinus.Minus, VSCountDown.Digit.Digit_m01);
-            cd.SetTimer(VSCountDown.PlusMinus.Minus, VSCountDown.Digit.Digit_m10);
-            cd.Clear();
-            Assert.IsTrue(cd.StringTime == "00:00:00");
-        }
-        [TestMethod]
-        public void カウントダウンタイマーをカウントアップ()
-        {
-            cd.SetTimer(VSCountDown.PlusMinus.Plus, VSCountDown.Digit.Digit_s10);
-            cd.Counter();
-            Assert.IsTrue(cd.StringTime == "00:00:11");
+            _cd.SetTimer(VsCountDown.PlusMinus.Minus, VsCountDown.Digit.DigitM01);
+            _cd.SetTimer(VsCountDown.PlusMinus.Minus, VsCountDown.Digit.DigitM10);
+            _cd.Clear();
+            Assert.IsTrue(_cd.StringTime == "00:00:00");
         }
         [TestMethod]
         public void カウントダウンタイマーをカウントダウン()
         {
-            cd.UpDownTime = VSCountDown.UpDown.Down;
-            cd.Counter();
-            Assert.IsTrue(cd.StringTime == "-00:00:01");
+            _cd.SetTimer(VsCountDown.PlusMinus.Plus, VsCountDown.Digit.DigitM01);
+            _cd.UpDownTime = VsCountDown.UpDown.Down;
+            _cd.SetStart();
+
+            _cd.Counter();
+            Assert.IsTrue(_cd.StringTime == "00:00:59");
+        }
+        [TestMethod]
+        public void カウントダウンタイマーをカウントアップ()
+        {
+            _cd.SetTimer(VsCountDown.PlusMinus.Plus, VsCountDown.Digit.DigitS01);
+            _cd.UpDownTime = VsCountDown.UpDown.Up;
+            _cd.SetStart();
+
+            _cd.Counter();
+            Assert.IsTrue(_cd.StringTime == "00:00:01");
+        }
+        [TestMethod]
+        public void カウントダウンタイマーをカウントダウンしてマイナスチェック()
+        {
+            _cd.SetTimer(new DateTime(0));
+            _cd.UpDownTime = VsCountDown.UpDown.Down;
+            _cd.SetStart();
+
+            _cd.Counter();
+            Assert.IsTrue(_cd.StringTime == "-00:00:01");
+        }
+        [TestMethod]
+        public void カウントダウンタイマーをカウントプラスしてマイナスチェック()
+        {
+            _cd.SetTimer(VsCountDown.PlusMinus.Plus, VsCountDown.Digit.DigitS01);
+            _cd.SetTimer(VsCountDown.PlusMinus.Plus, VsCountDown.Digit.DigitS01);
+            _cd.UpDownTime = VsCountDown.UpDown.Up;
+            _cd.SetStart();
+
+            _cd.Counter();
+            _cd.Counter();
+            _cd.Counter();
+            Assert.IsTrue(_cd.Minus == true);
         }
     }
 }
