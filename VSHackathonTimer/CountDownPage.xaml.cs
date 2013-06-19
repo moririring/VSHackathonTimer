@@ -31,6 +31,7 @@ namespace VSHackathonTimer
             this.InitializeComponent();
         }
 
+        /*
         /// <summary>
         /// このページには、移動中に渡されるコンテンツを設定します。前のセッションからページを
         /// 再作成する場合は、保存状態も指定されます。
@@ -64,7 +65,7 @@ namespace VSHackathonTimer
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
         }
-
+        */
         private void timer_Tick(object sender, object e)
         {
             gDateTime.CountDown();
