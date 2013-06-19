@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using VSHackathonTimer.Common;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -39,33 +40,42 @@ namespace VSHackathonTimer
         /// 検索結果やその他の情報を表示するために使用されます。
         /// </summary>
         /// <param name="args">起動要求とプロセスの詳細を表示します。</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected async override void OnLaunched(LaunchActivatedEventArgs args)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
             // ウィンドウに既にコンテンツが表示されている場合は、アプリケーションの初期化を繰り返さずに、
             // ウィンドウがアクティブであることだけを確認してください
+
             if (rootFrame == null)
             {
                 // ナビゲーション コンテキストとして動作するフレームを作成し、最初のページに移動します
                 rootFrame = new Frame();
-                
-                VSHackathonTimer.Common.SuspensionManager.RegisterFrame(rootFrame, "appFrame");
+                //フレームを SuspensionManager キーに関連付けます                                
+                SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
 
                 if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: 以前中断したアプリケーションから状態を読み込みます。
+                    // 必要な場合のみ、保存されたセッション状態を復元します
+                    try
+                    {
+                        await SuspensionManager.RestoreAsync();
+                    }
+                    catch (SuspensionManagerException)
+                    {
+                        //状態の復元に何か問題があります。
+                        //状態がないものとして続行します
+                    }
                 }
 
                 // フレームを現在のウィンドウに配置します
                 Window.Current.Content = rootFrame;
             }
-
             if (rootFrame.Content == null)
             {
                 // ナビゲーション スタックが復元されていない場合、最初のページに移動します。
                 // このとき、必要な情報をナビゲーション パラメーターとして渡して、新しいページを
-                // 構成します
+                // を構成します
                 if (!rootFrame.Navigate(typeof(CountDownSetPage), args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
@@ -85,7 +95,7 @@ namespace VSHackathonTimer
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            await VSHackathonTimer.Common.SuspensionManager.SaveAsync();
+            await SuspensionManager.SaveAsync();
             //TODO: アプリケーションの状態を保存してバックグラウンドの動作があれば停止します
             deferral.Complete();
         }
