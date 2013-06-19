@@ -28,6 +28,7 @@ namespace VSHackathonTimer
             this.InitializeComponent();
         }
 
+        /*
         /// <summary>
         /// このページには、移動中に渡されるコンテンツを設定します。前のセッションからページを
         /// 再作成する場合は、保存状態も指定されます。
@@ -72,7 +73,7 @@ namespace VSHackathonTimer
             //TimerTextBox.Text = gVSCountDown.StringTime;
 
         }
-
+        */
         private void TimerButton_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
